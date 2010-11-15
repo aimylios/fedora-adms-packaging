@@ -1,0 +1,41 @@
+--- adms_orig/configure.ac	2010-08-01 21:57:05.390625000 +0200
++++ adms/configure.ac	2010-08-01 21:31:51.046875000 +0200
+@@ -584,14 +584,14 @@
+     else
+       AC_MSG_RESULT(ok)
+     fi
+-    AC_MSG_CHECKING(for GD Perl module)
+-    have_gd="`$PERL -MGD -e 'exit 0;' >/dev/null 2>&1`"
+-    if test $? != "0"; then
+-      AC_MSG_RESULT(failed)
+-      AC_MSG_ERROR([Perl package GD:: may be downloaded from http://search.cpan.org/dist/GD])
+-    else
+-      AC_MSG_RESULT(ok)
+-    fi
++#    AC_MSG_CHECKING(for GD Perl module)
++#    have_gd="`$PERL -MGD -e 'exit 0;' >/dev/null 2>&1`"
++#    if test $? != "0"; then
++#      AC_MSG_RESULT(failed)
++#      AC_MSG_ERROR([Perl package GD:: may be downloaded from http://search.cpan.org/dist/GD])
++#    else
++#      AC_MSG_RESULT(ok)
++#    fi
+   fi
+ fi
+
+--- adms_orig/images/Makefile.am	2010-08-01 21:57:04.390625000 +0200
++++ adms/images/Makefile.am	2010-08-01 21:22:18.031250000 +0200
+@@ -96,9 +96,9 @@
+ generated_FILES=adms-scalar.png adms-element.png adms-enumeration.png adms-uid.png adms-alias.png
+ EXTRA_DIST=mkimages.pl $(generated_FILES)
+
+-if MAINTAINER_MODE
+-$(generated_FILES): ${srcdir}/mkimages.pl
+-	$(PERL) ${srcdir}/mkimages.pl
+-endif
++# if MAINTAINER_MODE
++# $(generated_FILES): ${srcdir}/mkimages.pl
++# 	$(PERL) ${srcdir}/mkimages.pl
++# endif
+
+ CLEANFILES=core .*.swp *\~
