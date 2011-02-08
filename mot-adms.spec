@@ -2,7 +2,7 @@
 
 Name:           mot-adms
 Version:        2.2.9
-Release:        1.svn1186%{?dist}
+Release:        2.svn1186%{?dist}
 Summary:        An electrical compact device models converter
 
 Group:          Applications/Engineering
@@ -76,6 +76,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.9-2.svn1186
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Thu Aug 19 2010 Chitlesh GOORAH <chitlesh [AT] fedoraproject DOT org> - 2.2.9-1.svn1186
 - Setup for ngspice and qucs support
 
