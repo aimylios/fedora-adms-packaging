@@ -2,7 +2,7 @@
 
 Name:           mot-adms
 Version:        2.2.9
-Release:        4.svn1186%{?dist}
+Release:        5.svn1186%{?dist}
 Summary:        An electrical compact device models converter
 
 Group:          Applications/Engineering
@@ -76,6 +76,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.9-5.svn1186
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.9-4.svn1186
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
