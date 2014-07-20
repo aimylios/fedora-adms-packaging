@@ -2,7 +2,7 @@
 
 Name:           mot-adms
 Version:        2.3.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An electrical compact device models converter
 
 Group:          Applications/Engineering
@@ -47,8 +47,8 @@ make
 %install
 make INSTALL="%{_bindir}/install -p" install DESTDIR=%{buildroot}
 
-#find  %{buildroot}/%{_libdir} -name "*.la" -exec rm -f {} \;
-#find  %{buildroot}/%{_libdir} -name "*.a"  -exec rm -f {} \;
+# Remove libtool archives and static libs
+find %{buildroot} -type f -name "*.la" -delete
 
 
 %post -p /sbin/ldconfig
@@ -65,7 +65,10 @@ make INSTALL="%{_bindir}/install -p" install DESTDIR=%{buildroot}
 %{_mandir}/man1/admsCheck.1.gz
 
 %changelog
-* Thu Jul 17 2014 Peter Robinson <pbrobinson@fedoraproject.org> 2.3.2-1
+* Sun Jul 20 2014 Peter Robinson <pbrobinson@fedoraproject.org> 2.3.2-2
+- Remove libtool archive files
+
+* Sun Jul 20 2014 Peter Robinson <pbrobinson@fedoraproject.org> 2.3.2-1
 - Update to 2.3.2
 
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.9-7.svn1186
