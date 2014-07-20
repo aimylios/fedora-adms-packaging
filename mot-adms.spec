@@ -1,25 +1,22 @@
 # This package is part of the Free Electronic Lab.
 
 Name:           mot-adms
-Version:        2.2.9
-Release:        7.svn1186%{?dist}
+Version:        2.3.2
+Release:        1%{?dist}
 Summary:        An electrical compact device models converter
 
 Group:          Applications/Engineering
 License:        LGPLv2+
 URL:            http://mot-adms.sourceforge.net/
 
-#Source0:        http://downloads.sourceforge.net/sourceforge/%{_name}/%{name}-%{version}.tar.gz
-Source0:        mot-adms.tar.gz
-# The above source file can be download with this Tcl script
-Source1:        mot-adms-download.tcl
+Source0:        http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-%{version}.tar.gz
 
 # Remove useless perl-GD dependency
 Patch0:         mot-adms-remove-BR-perl-GD.patch
+Patch1:         mot-adms-format-security.patch
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
-BuildRequires:  flex bison perl-XML-LibXML automake libtool
+BuildRequires:  flex bison perl-XML-LibXML
+BuildRequires:  automake autoconf libtool
 
 %description
 ADMS is a code generator that converts electrical compact
@@ -29,38 +26,30 @@ Based on transformations specified in XML language, ADMS
 transforms Verilog-AMS code into other target languages.
 
 %prep
-%setup -q -n %name
+%setup -q -n adms-%{version}
 
 %patch0 -p1 -b .perlGD
-
-# minor cleanups and preparations
-rm -rf auxconf && mkdir auxconf
-%{__autoheader}
-%{__libtoolize} --force --copy
-%{__aclocal}
-touch ChangeLog
-%{__automake} --add-missing -c
-%{__autoconf}
+%patch1 -p1 -b .format-security
+mv README.md README
 
 %build
+autoreconf -vif
 %configure \
     --disable-static \
     --enable-maintainer-mode \
     --libdir=%{_libdir}/%{name}
+
 # not parallel build safe
 make
 # %{?_smp_mflags}
 
 
 %install
-rm -rf %{buildroot}
 make INSTALL="%{_bindir}/install -p" install DESTDIR=%{buildroot}
 
 #find  %{buildroot}/%{_libdir} -name "*.la" -exec rm -f {} \;
 #find  %{buildroot}/%{_libdir} -name "*.a"  -exec rm -f {} \;
 
-%clean
-rm -rf %{buildroot}
 
 %post -p /sbin/ldconfig
 
@@ -69,13 +58,16 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%doc ABOUT-NLS AUTHORS COPYING TODO README NEWS
+%doc AUTHORS COPYING TODO README ChangeLog
 %{_bindir}/admsXml
 %{_libdir}/%{name}
 %{_mandir}/man1/admsXml.1.gz
-
+%{_mandir}/man1/admsCheck.1.gz
 
 %changelog
+* Thu Jul 17 2014 Peter Robinson <pbrobinson@fedoraproject.org> 2.3.2-1
+- Update to 2.3.2
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.9-7.svn1186
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 

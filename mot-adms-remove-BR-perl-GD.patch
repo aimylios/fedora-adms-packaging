@@ -1,41 +1,42 @@
---- adms_orig/configure.ac	2010-08-01 21:57:05.390625000 +0200
-+++ adms/configure.ac	2010-08-01 21:31:51.046875000 +0200
-@@ -584,14 +584,14 @@
-     else
-       AC_MSG_RESULT(ok)
-     fi
--    AC_MSG_CHECKING(for GD Perl module)
--    have_gd="`$PERL -MGD -e 'exit 0;' >/dev/null 2>&1`"
--    if test $? != "0"; then
--      AC_MSG_RESULT(failed)
--      AC_MSG_ERROR([Perl package GD:: may be downloaded from http://search.cpan.org/dist/GD])
--    else
--      AC_MSG_RESULT(ok)
--    fi
-+#    AC_MSG_CHECKING(for GD Perl module)
-+#    have_gd="`$PERL -MGD -e 'exit 0;' >/dev/null 2>&1`"
-+#    if test $? != "0"; then
-+#      AC_MSG_RESULT(failed)
-+#      AC_MSG_ERROR([Perl package GD:: may be downloaded from http://search.cpan.org/dist/GD])
-+#    else
-+#      AC_MSG_RESULT(ok)
-+#    fi
-   fi
+--- adms-2.3.2/configure.ac.orig	2014-07-20 12:14:38.813866179 +0100
++++ adms-2.3.2/configure.ac	2014-07-20 12:15:47.073986623 +0100
+@@ -24,7 +24,7 @@
+ # Automake Initialisation.
+ AM_INIT_AUTOMAKE
+ 
+-# Maintainer mode is used to detect/run Perl (XML::LibXml and GD modules) and make dist tarball
++# Maintainer mode is used to detect/run Perl (XML::LibXml module) and make dist tarball
+ AM_MAINTAINER_MODE
+ 
+ AX_PROG_FLEX([],[AC_MSG_WARN(Program flex not found (found $LEX))
+@@ -84,7 +84,7 @@
+ AC_PROG_LIBTOOL
+ AC_SUBST([LIBTOOL_DEPS])
+ 
+-dnl Perl, XML::LibXML and GD modules required for maintainer
++dnl Perl, XML::LibXML module required for maintainer
+ if test $USE_MAINTAINER_MODE = yes; then
+ 
+   AC_PATH_PROG(PERL, perl, :)
+@@ -95,8 +95,6 @@
+   AX_PERL_MODULE_VERSION([XML::LibXML 2],[],[
+       AC_MSG_RESULT(failed)
+       AC_MSG_ERROR([Perl package XML::LibXML may be downloaded from http://search.cpan.org/dist/libXML])])
+-  AX_PERL_MODULE_VERSION([GD 2.4],[],[
+-      AC_MSG_ERROR([Perl package GD:: may be downloaded from http://search.cpan.org/dist/GD])])
  fi
-
---- adms_orig/images/Makefile.am	2010-08-01 21:57:04.390625000 +0200
-+++ adms/images/Makefile.am	2010-08-01 21:22:18.031250000 +0200
-@@ -96,9 +96,9 @@
- generated_FILES=adms-scalar.png adms-element.png adms-enumeration.png adms-uid.png adms-alias.png
+ 
+ AC_CONFIG_FILES([Makefile
+--- adms-2.3.2/images/Makefile.am.orig	2014-07-20 12:14:23.428613664 +0100
++++ adms-2.3.2/images/Makefile.am	2014-07-20 12:16:24.456600306 +0100
+@@ -8,10 +8,4 @@
+ 
  EXTRA_DIST=mkimages.pl $(generated_FILES)
-
+ 
+-# Perl GD module only required for maintainers
 -if MAINTAINER_MODE
 -$(generated_FILES): ${srcdir}/mkimages.pl
 -	$(PERL) ${srcdir}/mkimages.pl
 -endif
-+# if MAINTAINER_MODE
-+# $(generated_FILES): ${srcdir}/mkimages.pl
-+# 	$(PERL) ${srcdir}/mkimages.pl
-+# endif
-
- CLEANFILES=core .*.swp *\~
+-
+ CLEANFILES=core .*.swp *\~ $(generated_FILES)
