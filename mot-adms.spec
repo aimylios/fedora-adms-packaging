@@ -1,8 +1,8 @@
 # This package is part of the Free Electronic Lab.
 
 Name:           mot-adms
-Version:        2.3.2
-Release:        4%{?dist}
+Version:        2.3.4
+Release:        1%{?dist}
 Summary:        An electrical compact device models converter
 
 Group:          Applications/Engineering
@@ -13,7 +13,6 @@ Source0:        http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/a
 
 # Remove useless perl-GD dependency
 Patch0:         mot-adms-remove-BR-perl-GD.patch
-Patch1:         mot-adms-format-security.patch
 
 BuildRequires:  flex bison perl-XML-LibXML
 BuildRequires:  automake autoconf libtool
@@ -29,20 +28,13 @@ transforms Verilog-AMS code into other target languages.
 %setup -q -n adms-%{version}
 
 %patch0 -p1 -b .perlGD
-%patch1 -p1 -b .format-security
 mv README.md README
 
 %build
 autoreconf -vif
-%configure \
-    --disable-static \
-    --enable-maintainer-mode \
-    --libdir=%{_libdir}/%{name}
+%configure --enable-maintainer-mode
 
-# not parallel build safe
-make
-# %{?_smp_mflags}
-
+make %{?_smp_mflags}
 
 %install
 make INSTALL="%{_bindir}/install -p" install DESTDIR=%{buildroot}
@@ -50,21 +42,23 @@ make INSTALL="%{_bindir}/install -p" install DESTDIR=%{buildroot}
 # Remove libtool archives and static libs
 find %{buildroot} -type f -name "*.la" -delete
 
-
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
-
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS COPYING TODO README ChangeLog
-%{_bindir}/admsXml
-%{_libdir}/%{name}
+%doc AUTHORS TODO README ChangeLog
+%license COPYING
+%{_bindir}/*
 %{_mandir}/man1/admsXml.1.gz
 %{_mandir}/man1/admsCheck.1.gz
 
 %changelog
+* Thu Oct 08 2015 Marcin Juszkiewicz <mjuszkiewicz@redhat.com> - 2.3.4-1
+- Update to 2.3.4
+- ship admsCheck binary
+- upstream decided to kill shared libraries in 2.3.3 release
+- license tag for COPYING
+- enabled parallel make
+- removed post(run) ldconfig calls
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
