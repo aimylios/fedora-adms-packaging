@@ -43,7 +43,6 @@ make INSTALL="%{_bindir}/install -p" install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name "*.la" -delete
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS TODO README ChangeLog
 %license COPYING
 %{_bindir}/*
