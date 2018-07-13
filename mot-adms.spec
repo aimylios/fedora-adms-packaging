@@ -2,7 +2,7 @@
 
 Name:           mot-adms
 Version:        2.3.4
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        An electrical compact device models converter
 
 Group:          Applications/Engineering
@@ -50,6 +50,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_mandir}/man1/admsCheck.1.gz
 
 %changelog
+* Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.4-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.4-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
