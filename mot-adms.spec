@@ -14,6 +14,7 @@ Source0:        http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/a
 # Remove useless perl-GD dependency
 Patch0:         mot-adms-remove-BR-perl-GD.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  flex bison perl-XML-LibXML
 BuildRequires:  automake autoconf libtool
 
